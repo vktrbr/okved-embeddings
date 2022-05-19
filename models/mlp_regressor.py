@@ -8,7 +8,7 @@ class MLPRegressorTorch(nn.Module):
     def __init__(self, input_dim: int, layer_dims: tuple[int, ...] = (100,), activation=nn.ReLU()):
         super(MLPRegressorTorch, self).__init__()
         self.layers = [nn.Linear(input_dim, layer_dims[0]), activation]
-        for i in range(1, len(layer_dims) - 1):
+        for i in range(0, len(layer_dims) - 1):
             self.layers.append(nn.Linear(layer_dims[i], layer_dims[i + 1]))
             self.layers.append(activation)
         else:
