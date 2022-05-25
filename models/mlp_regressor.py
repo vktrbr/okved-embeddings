@@ -5,7 +5,7 @@ from torch import optim
 
 
 class MLPRegressorTorch(nn.Module):
-    def __init__(self, input_dim: int, layer_dims: tuple[int, ...] = (100,), activation=nn.ReLU()):
+    def __init__(self, input_dim: int, layer_dims: tuple = (100,), activation=nn.ReLU()):
         super(MLPRegressorTorch, self).__init__()
         self.layers = [nn.Linear(input_dim, layer_dims[0]), activation]
         for i in range(0, len(layer_dims) - 1):
@@ -13,7 +13,7 @@ class MLPRegressorTorch(nn.Module):
             self.layers.append(activation)
         else:
             self.layers.append(nn.Linear(layer_dims[-1], 1))
-            self.layers.append(activation)
+            self.layers.append(nn.Sigmoid())
         self.layers = nn.Sequential(*self.layers)
         self.criterion = nn.MSELoss()
 
@@ -67,3 +67,5 @@ class MLPRegressorTorch(nn.Module):
         else:
             if last_improvement > 0:
                 self.load_state_dict(best_state)
+
+        return self
